@@ -1,0 +1,9 @@
+======= Change History ========
+
+--- Ver. 1.3.1 ---
+
+- Synced with CrashRpt 1.3.1 rev 1317 and guarded all extensions with #ifdef CRASHRPT_EX
+- Fixed issues reported to CrashRpe including CMakeList.txt file corrections
+- Added CRASHRPT_EX option to main CMake file
+- Created separate resource files for the CrashSender, CrashRptTest and CrasRptTestMFC 
+  applications when CRASHRPT_EX is defined
