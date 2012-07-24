@@ -83,7 +83,7 @@ LRESULT CResendDlg::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lPar
 
     CString sTitle;
     sTitle.Format(Utility::GetINIString(g_CrashInfo.m_sLangFileName, _T("ResendDlg"), _T("DlgCaption")), 
-        g_CrashInfo.m_sAppName);
+        (LPCTSTR) g_CrashInfo.m_sAppName);
     SetWindowText(sTitle);
 
     // center the dialog on the screen
@@ -500,7 +500,7 @@ LRESULT CResendDlg::OnSendNow(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl
         Utility::GetSystemTimeUTC(sCurTime);
         sCurTime.Replace(':', '-');
         m_sLogFile.Format(_T("%s\\CrashRpt-Log-%s.txt"), 
-            g_CrashInfo.m_sUnsentCrashReportsFolder, sCurTime);
+            (LPCTSTR) g_CrashInfo.m_sUnsentCrashReportsFolder, (LPCTSTR) sCurTime);
 #if _MSC_VER<1400
         m_fileLog = _tfopen(m_sLogFile, _T("wt"));
 #else
@@ -624,7 +624,7 @@ BOOL CResendDlg::SendNextReport()
 
     CString sCaption;
     sCaption.Format(Utility::GetINIString(g_CrashInfo.m_sLangFileName, _T("ResendDlg"), _T("DlgCaption")), 
-        g_CrashInfo.m_sAppName);
+        (LPCTSTR) g_CrashInfo.m_sAppName);
 
     if(m_bErrors && !g_CrashInfo.m_bSilentMode)
     {
@@ -737,7 +737,7 @@ void CResendDlg::AddTrayIcon(BOOL bAdd)
         nf.uVersion = NOTIFYICON_VERSION;
 
         CString sTip; 
-        sTip.Format(Utility::GetINIString(g_CrashInfo.m_sLangFileName, _T("ResendDlg"), _T("DlgCaption")), g_CrashInfo.m_sAppName);
+        sTip.Format(Utility::GetINIString(g_CrashInfo.m_sLangFileName, _T("ResendDlg"), _T("DlgCaption")), (LPCTSTR) g_CrashInfo.m_sAppName);
         _TCSCPY_S(nf.szTip, 64, sTip);
         HICON hIcon = g_CrashInfo.GetCustomIcon();
         if(!hIcon)
@@ -747,12 +747,12 @@ void CResendDlg::AddTrayIcon(BOOL bAdd)
 
         CString sInfo;
         sInfo.Format(Utility::GetINIString(g_CrashInfo.m_sLangFileName, _T("ResendDlg"), _T("BalloonText")), 
-            g_CrashInfo.m_sAppName, g_CrashInfo.m_sAppName);
+            (LPCTSTR) g_CrashInfo.m_sAppName, (LPCTSTR) g_CrashInfo.m_sAppName);
         _TCSCPY_S(nf.szInfo, 200, sInfo.GetBuffer(0));
 
         CString sInfoTitle;
         sInfoTitle.Format(Utility::GetINIString(g_CrashInfo.m_sLangFileName, _T("ResendDlg"), _T("BalloonCaption")), 
-            g_CrashInfo.m_sAppName);
+            (LPCTSTR) g_CrashInfo.m_sAppName);
         _TCSCPY_S(nf.szInfoTitle, 64, sInfoTitle.GetBuffer(0));
 
         Shell_NotifyIcon(NIM_ADD,&nf);
@@ -896,11 +896,11 @@ void CResendDlg::DoProgressTimer()
                     CString sMailClientName;        
                     CMailMsg::DetectMailClient(sMailClientName);
                     CString msg;
-                    msg.Format(Utility::GetINIString(g_CrashInfo.m_sLangFileName, _T("ProgressDlg"), _T("ConfirmLaunchEmailClient")), sMailClientName);
+                    msg.Format(Utility::GetINIString(g_CrashInfo.m_sLangFileName, _T("ProgressDlg"), _T("ConfirmLaunchEmailClient")), (LPCTSTR) sMailClientName);
 
                     CString sCaption = Utility::GetINIString(g_CrashInfo.m_sLangFileName, _T("ProgressDlg"), _T("DlgCaption"));
                     CString sTitle;
-                    sTitle.Format(sCaption, g_CrashInfo.m_sAppName);
+                    sTitle.Format(sCaption, (LPCTSTR) g_CrashInfo.m_sAppName);
                     INT_PTR result = MessageBox(msg, 
                         sTitle,
                         MB_OKCANCEL|MB_ICONQUESTION|dwFlags);

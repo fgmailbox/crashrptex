@@ -111,7 +111,7 @@ BOOL CALLBACK EnumMonitorsProc(HMONITOR hMonitor, HDC /*hdcMonitor*/, LPRECT lpr
     if(psc->m_fmt==SCREENSHOT_FORMAT_PNG)
     {
         // Init PNG writer
-        sFileName.Format(_T("%s\\screenshot%d.png"), psc->m_sSaveDirName, psc->m_nIdStartFrom++);
+        sFileName.Format(_T("%s\\screenshot%d.png"), (LPCTSTR) psc->m_sSaveDirName, psc->m_nIdStartFrom++);
         BOOL bInit = psc->PngInit(nWidth, nHeight, psc->m_bGrayscale, sFileName);
         if(!bInit)
             goto cleanup;
@@ -119,7 +119,7 @@ BOOL CALLBACK EnumMonitorsProc(HMONITOR hMonitor, HDC /*hdcMonitor*/, LPRECT lpr
     else if(psc->m_fmt==SCREENSHOT_FORMAT_JPG)
     {
         // Init JPG writer
-        sFileName.Format(_T("%s\\screenshot%d.jpg"), psc->m_sSaveDirName, psc->m_nIdStartFrom++);
+        sFileName.Format(_T("%s\\screenshot%d.jpg"), (LPCTSTR) psc->m_sSaveDirName, psc->m_nIdStartFrom++);
         BOOL bInit = psc->JpegInit(nWidth, nHeight, psc->m_bGrayscale, psc->m_nJpegQuality, sFileName);
         if(!bInit)
             goto cleanup;

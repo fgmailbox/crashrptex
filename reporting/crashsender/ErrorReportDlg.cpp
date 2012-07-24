@@ -124,7 +124,7 @@ LRESULT CErrorReportDlg::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /
 #ifdef CRASHRPT_EX
 // AS: Display the allow continue option if applicable
 	m_chkContinue = GetDlgItem(IDC_CONTINUE);
-    sCaption.Format(Utility::GetINIString(g_CrashInfo.m_sLangFileName, _T("MainDlg"), _T("ContinueApp")), g_CrashInfo.m_sAppName);
+    sCaption.Format(Utility::GetINIString(g_CrashInfo.m_sLangFileName, _T("MainDlg"), _T("ContinueApp")), (LPCTSTR) g_CrashInfo.m_sAppName);
     if (! sCaption.IsEmpty())
         m_chkContinue.SetWindowText(sCaption);
     
@@ -137,7 +137,7 @@ LRESULT CErrorReportDlg::OnInitDialog(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /
         g_CrashInfo.m_bAppRestart = FALSE;
     }
 #endif
-    sCaption.Format(Utility::GetINIString(g_CrashInfo.m_sLangFileName, _T("MainDlg"), _T("RestartApp")), g_CrashInfo.m_sAppName);
+    sCaption.Format(Utility::GetINIString(g_CrashInfo.m_sLangFileName, _T("MainDlg"), _T("RestartApp")), (LPCTSTR) g_CrashInfo.m_sAppName);
     m_chkRestart.SetWindowText(sCaption);
     m_chkRestart.SetCheck(BST_CHECKED);
     m_chkRestart.ShowWindow(g_CrashInfo.m_bAppRestart?SW_SHOW:SW_HIDE);
@@ -271,7 +271,7 @@ LRESULT CErrorReportDlg::OnEraseBkgnd(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lPa
     rcHeading.right -= 10;
 
     CString sHeading;
-    sHeading.Format(Utility::GetINIString(g_CrashInfo.m_sLangFileName, _T("MainDlg"), _T("HeaderText")), g_CrashInfo.m_sAppName);
+    sHeading.Format(Utility::GetINIString(g_CrashInfo.m_sLangFileName, _T("MainDlg"), _T("HeaderText")), (LPCTSTR) g_CrashInfo.m_sAppName);
     dc.SelectFont(m_HeadingFont);
     dc.DrawTextEx(sHeading.GetBuffer(0), sHeading.GetLength(), &rcHeading, 
         DT_LEFT|DT_VCENTER|DT_SINGLELINE|DT_END_ELLIPSIS);  
@@ -356,7 +356,7 @@ LRESULT CErrorReportDlg::OnCompleteCollectCrashInfo(UINT /*uMsg*/, WPARAM /*wPar
             LONG64 lTotalSize = g_ErrorReportSender.GetUncompressedReportSize(g_CrashInfo.GetReport(0));  
             CString sTotalSize = Utility::FileSizeToStr(lTotalSize);    
             CString sSubHeader;
-            sSubHeader.Format(Utility::GetINIString(g_CrashInfo.m_sLangFileName, _T("MainDlg"), _T("SubHeaderText")), sTotalSize);
+            sSubHeader.Format(Utility::GetINIString(g_CrashInfo.m_sLangFileName, _T("MainDlg"), _T("SubHeaderText")), (LPCTSTR) sTotalSize);
             m_statSubHeader.SetWindowText(sSubHeader);
             ShowWindow(SW_SHOW);
         } 

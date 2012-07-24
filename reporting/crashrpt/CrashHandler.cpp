@@ -242,8 +242,8 @@ int CCrashHandler::Init(
     if(m_sEmailSubject.IsEmpty())
     {
         // Generate the default subject
-        m_sEmailSubject.Format(_T("%s %s Error Report"), m_sAppName, 
-            m_sAppVersion.IsEmpty()?_T("[unknown_ver]"):m_sAppVersion);
+        m_sEmailSubject.Format(_T("%s %s Error Report"),(LPCTSTR)  m_sAppName, 
+            m_sAppVersion.IsEmpty()?_T("[unknown_ver]"):(LPCTSTR)m_sAppVersion);
     }
 
     // Save Email text.
@@ -385,7 +385,7 @@ int CCrashHandler::Init(
 
     // Create event that will be used to synchronize with CrashSender.exe process
     CString sEventName;
-    sEventName.Format(_T("Local\\CrashRptEvent_%s"), m_sCrashGUID);
+    sEventName.Format(_T("Local\\CrashRptEvent_%s"),(LPCTSTR)  m_sCrashGUID);
     m_hEvent = CreateEvent(NULL, FALSE, FALSE, sEventName);
     if(m_hEvent==NULL)
     {
@@ -401,7 +401,7 @@ int CCrashHandler::Init(
         DWORD dwCSIDL = CSIDL_LOCAL_APPDATA;
         Utility::GetSpecialFolder(dwCSIDL, sLocalAppDataFolder);
         m_sUnsentCrashReportsFolder.Format(_T("%s\\CrashRpt\\UnsentCrashReports\\%s_%s"), 
-            sLocalAppDataFolder, m_sAppName, m_sAppVersion);
+            (LPCTSTR) sLocalAppDataFolder, (LPCTSTR) m_sAppName, (LPCTSTR) m_sAppVersion);
     }
     else
     {    
@@ -491,7 +491,7 @@ CRASH_DESCRIPTION* CCrashHandler::PackCrashInfoIntoSharedMem(CSharedMem* pShared
 
     CString sSharedMemName;
     if(bTempMem)
-        sSharedMemName.Format(_T("%s-tmp"), m_sCrashGUID);    
+        sSharedMemName.Format(_T("%s-tmp"), (LPCTSTR) m_sCrashGUID);    
     else 
         sSharedMemName = m_sCrashGUID;
 
@@ -1124,7 +1124,7 @@ int CCrashHandler::GenerateErrorReport(
         // Failed to launch crash sender process.
         // Try notify user about crash using message box.
         CString szCaption;
-        szCaption.Format(_T("%s has stopped working"), Utility::getAppName());
+        szCaption.Format(_T("%s has stopped working"), (LPCTSTR) Utility::getAppName());
         CString szMessage;
         szMessage.Format(_T("Error launching CrashSender.exe"));
         MessageBox(NULL, szMessage, szCaption, MB_OK|MB_ICONERROR);    
@@ -1285,7 +1285,7 @@ int CCrashHandler::LaunchCrashSender(CString sCmdLineParams, BOOL bWait, HANDLE*
     memset(&pi, 0, sizeof(PROCESS_INFORMATION));    
 
     CString sCmdLine;
-    sCmdLine.Format(_T("\"%s\" \"%s\""), sCmdLineParams, sCmdLineParams.GetBuffer(0));
+    sCmdLine.Format(_T("\"%s\" \"%s\""), (LPCTSTR) sCmdLineParams, (LPCTSTR) sCmdLineParams.GetBuffer(0));
     BOOL bCreateProcess = CreateProcess(
         m_sPathToCrashSender, sCmdLine.GetBuffer(0), NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi);
     if(pi.hThread)
@@ -1801,7 +1801,7 @@ int CCrashHandler::ChangeGUID()
 
   // Create event that will be used to synchronize with CrashSender.exe process
   CString sEventName;
-  sEventName.Format(_T("Local\\CrashRptEvent_%s"), m_sCrashGUID);
+  sEventName.Format(_T("Local\\CrashRptEvent_%s"), (LPCTSTR) m_sCrashGUID);
   m_hEvent = CreateEvent(NULL, FALSE, FALSE, sEventName);
 
   if(m_hEvent==NULL)

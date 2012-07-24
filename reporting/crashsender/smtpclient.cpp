@@ -158,7 +158,7 @@ int CSmtpClient::GetSmtpServerName(CEmailMessage* msg, AssyncNotification* scn,
     sServer = msg->m_sFrom.Mid(msg->m_sFrom.Find('@')+1);
 
     CString sStatusMsg;
-    sStatusMsg.Format(_T("Quering MX record of domain %s"), sServer);
+    sStatusMsg.Format(_T("Quering MX record of domain %s"), (LPCTSTR) sServer);
     scn->SetProgress(sStatusMsg, 2);
 
     int r = DnsQuery(sServer, DNS_TYPE_MX, DNS_QUERY_STANDARD, 
@@ -228,7 +228,7 @@ int CSmtpClient::SendEmailToRecipient(CString sSmtpServer, CEmailMessage* msg, A
         }
     }
 
-    sStatusMsg.Format(_T("Getting address info of %s port %s"), sSmtpServer, CString(sServiceName));
+    sStatusMsg.Format(_T("Getting address info of %s port %s"), (LPCTSTR) sSmtpServer, (LPCTSTR) sServiceName);
     scn->SetProgress(sStatusMsg, 1);
 
     int res = SOCKET_ERROR;
@@ -260,7 +260,7 @@ int CSmtpClient::SendEmailToRecipient(CString sSmtpServer, CEmailMessage* msg, A
             goto exit;
         }
 
-        sStatusMsg.Format(_T("Connecting to SMTP server %s port %s"), sSmtpServer, CString(sServiceName));
+        sStatusMsg.Format(_T("Connecting to SMTP server %s port %s"), (LPCTSTR) sSmtpServer, (LPCTSTR) sServiceName);
         scn->SetProgress(sStatusMsg, 1);
 
         res = connect(sock, ptr->ai_addr, (int)ptr->ai_addrlen);
@@ -311,7 +311,7 @@ int CSmtpClient::SendEmailToRecipient(CString sSmtpServer, CEmailMessage* msg, A
     sStatusMsg.Format(_T("Sending sender and recipient information"));
     scn->SetProgress(sStatusMsg, 1);
 
-    sMsg.Format(_T("MAIL FROM:<%s>\r\n"), msg->m_sFrom);
+    sMsg.Format(_T("MAIL FROM:<%s>\r\n"), (LPCTSTR) msg->m_sFrom);
     res=SendMsg(scn, sock, sMsg, response, 1024);
     if(res!=250)
     {
@@ -320,7 +320,7 @@ int CSmtpClient::SendEmailToRecipient(CString sSmtpServer, CEmailMessage* msg, A
         goto exit;
     }
 
-    sMsg.Format(_T("RCPT TO:<%s>\r\n"), msg->m_sTo);
+    sMsg.Format(_T("RCPT TO:<%s>\r\n"), (LPCTSTR) msg->m_sTo);
     res=SendMsg(scn, sock, sMsg, response, 1024);
     if(res!=250)
     {
@@ -363,11 +363,11 @@ int CSmtpClient::SendEmailToRecipient(CString sSmtpServer, CEmailMessage* msg, A
 
     str.Format(_T("Date: %s %c%02d%02d\r\n"), strconv.a2t(szDateTime), diff_hours>=0?'+':'-', diff_hours, diff_mins);
     sMsg = str;
-    str.Format(_T("From: <%s>\r\n"), msg->m_sFrom);
+    str.Format(_T("From: <%s>\r\n"), (LPCTSTR) msg->m_sFrom);
     sMsg  += str;
-    str.Format(_T("To: <%s>\r\n"), msg->m_sTo);
+    str.Format(_T("To: <%s>\r\n"), (LPCTSTR) msg->m_sTo);
     sMsg += str;
-    str.Format(_T("Subject: %s\r\n"), msg->m_sSubject);
+    str.Format(_T("Subject: %s\r\n"),(LPCTSTR)  msg->m_sSubject);
     sMsg += str;
     sMsg += "MIME-Version: 1.0\r\n";
     sMsg += "Content-Type: multipart/mixed; boundary=KkK170891tpbkKk__FV_KKKkkkjjwq\r\n";
@@ -418,7 +418,7 @@ int CSmtpClient::SendEmailToRecipient(CString sSmtpServer, CEmailMessage* msg, A
         int nEncode=Base64EncodeAttachment(sFileName, sEncodedFileData);
         if(nEncode!=0)
         {
-            sStatusMsg.Format(_T("Error BASE64-encoding attachment %s"), sFileName);
+            sStatusMsg.Format(_T("Error BASE64-encoding attachment %s"), (LPCTSTR) sFileName);
             scn->SetProgress(sStatusMsg, 1);
             goto exit;
         }

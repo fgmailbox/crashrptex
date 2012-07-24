@@ -142,13 +142,13 @@ void CProgressDlg::Start(BOOL bCollectInfo, BOOL bMakeVisible)
     if(bCollectInfo)
     {
         CString sCaption;
-        sCaption.Format(Utility::GetINIString(g_CrashInfo.m_sLangFileName, _T("ProgressDlg"), _T("DlgCaption2")), g_CrashInfo.m_sAppName);
+        sCaption.Format(Utility::GetINIString(g_CrashInfo.m_sLangFileName, _T("ProgressDlg"), _T("DlgCaption2")), (LPCTSTR) g_CrashInfo.m_sAppName);
         SetWindowText(sCaption);    
     }
     else
     {
         CString sCaption;
-        sCaption.Format(Utility::GetINIString(g_CrashInfo.m_sLangFileName, _T("ProgressDlg"), _T("DlgCaption")), g_CrashInfo.m_sAppName);
+        sCaption.Format(Utility::GetINIString(g_CrashInfo.m_sLangFileName, _T("ProgressDlg"), _T("DlgCaption")), (LPCTSTR) g_CrashInfo.m_sAppName);
         SetWindowText(sCaption);    
     }
 
@@ -233,7 +233,7 @@ LRESULT CProgressDlg::OnTimer(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lParam*/, B
                 m_ActionOnCancel = DONT_CLOSE;
                 m_ActionOnClose = DONT_CLOSE;
                 CString sCaption;
-                sCaption.Format(Utility::GetINIString(g_CrashInfo.m_sLangFileName, _T("ProgressDlg"), _T("DlgCaptionExport")), g_CrashInfo.m_sAppName);
+                sCaption.Format(Utility::GetINIString(g_CrashInfo.m_sLangFileName, _T("ProgressDlg"), _T("DlgCaptionExport")), (LPCTSTR) g_CrashInfo.m_sAppName);
                 SetWindowText(sCaption);    
 
                 m_statText.SetWindowText(Utility::GetINIString(g_CrashInfo.m_sLangFileName, _T("ProgressDlg"), _T("CompressingFiles")));        
@@ -341,11 +341,11 @@ LRESULT CProgressDlg::OnTimer(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lParam*/, B
                     CString sMailClientName;        
                     CMailMsg::DetectMailClient(sMailClientName);
                     CString msg;
-                    msg.Format(Utility::GetINIString(g_CrashInfo.m_sLangFileName, _T("ProgressDlg"), _T("ConfirmLaunchEmailClient")), sMailClientName);
+                    msg.Format(Utility::GetINIString(g_CrashInfo.m_sLangFileName, _T("ProgressDlg"), _T("ConfirmLaunchEmailClient")), (LPCTSTR) sMailClientName);
 
                     CString sCaption = Utility::GetINIString(g_CrashInfo.m_sLangFileName, _T("ProgressDlg"), _T("DlgCaption"));
                     CString sTitle;
-                    sTitle.Format(sCaption, g_CrashInfo.m_sAppName);
+                    sTitle.Format(sCaption, (LPCTSTR) g_CrashInfo.m_sAppName);
                     INT_PTR result = MessageBox(msg, 
                         sTitle,
                         MB_OKCANCEL|MB_ICONQUESTION|dwFlags);
