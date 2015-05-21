@@ -1,0 +1,1 @@
+**CrashRptEx** is an extension of the original [crashrpt crash reporting system](http://code.google.com/p/crashrpt/). It adds several features that come in handy in MFC applications, an MFC test application and it allows catching crashes at defined positions in your call stack and continuing the application upon user request.
